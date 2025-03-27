@@ -1,4 +1,4 @@
-package api_gestao_freelancers.entity.repository;
+package api_gestao_freelancers.repository;
 
 import api_gestao_freelancers.entity.Proposal;
 import org.springframework.data.jpa.repository.JpaRepository;

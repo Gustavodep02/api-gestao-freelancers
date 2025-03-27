@@ -1,17 +1,14 @@
 package api_gestao_freelancers.entity;
 
 
-import api_gestao_freelancers.entity.enums.MainProfile;
+import api_gestao_freelancers.enums.MainProfile;
 import jakarta.persistence.*;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.antlr.v4.runtime.misc.NotNull;
-
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "users")
 public class User {
 
@@ -21,7 +18,8 @@ public class User {
 
     private String fullName;
 
-    @Column(name = "cpf_cnpj")
+    @NotNull
+    @Column(name = "cpf_cnpj", unique = true)
     private String cpfCnpj;
 
     @Column(unique = true)

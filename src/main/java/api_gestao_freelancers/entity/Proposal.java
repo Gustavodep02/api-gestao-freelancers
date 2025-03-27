@@ -1,16 +1,14 @@
 package api_gestao_freelancers.entity;
 
 
-import api_gestao_freelancers.entity.enums.StatusProposal;
+import api_gestao_freelancers.enums.StatusProposal;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
+@Data
 public class Proposal {
 
     @Id

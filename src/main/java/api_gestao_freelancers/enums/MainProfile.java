@@ -1,4 +1,4 @@
-package api_gestao_freelancers.entity.enums;
+package api_gestao_freelancers.enums;
 
 public enum MainProfile {
     CLIENT, FREELANCER

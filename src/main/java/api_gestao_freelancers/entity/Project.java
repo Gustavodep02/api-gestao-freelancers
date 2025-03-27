@@ -1,16 +1,15 @@
 package api_gestao_freelancers.entity;
 
-import api_gestao_freelancers.entity.enums.StatusProject;
+import api_gestao_freelancers.enums.StatusProject;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
 
 import java.time.LocalDateTime;
 
 
 @Entity
-@Getter
-@Setter
+@Data
 public class Project {
 
     @Id
