@@ -2,7 +2,6 @@ package api_gestao_freelancers.entity;
 
 
 import api_gestao_freelancers.enums.MainProfile;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import jakarta.validation.constraints.NotNull;
@@ -39,7 +38,12 @@ public class User {
     @PreUpdate
     private void validateUserType() {
         if (!isClient && !isFreelancer) {
-            throw new IllegalStateException("The user must be client or freelancer.");
+            throw new IllegalStateException("The user must be a client or freelancer.");
+        }
+        if(mainProfile.equals(MainProfile.CLIENT) && !isClient) {
+            throw new IllegalStateException("The user must be a client.");
+        } else if (mainProfile.equals(MainProfile.FREELANCER) && !isFreelancer) {
+            throw new IllegalStateException("The user must be a freelancer.");
         }
     }
 }
