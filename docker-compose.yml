@@ -1,0 +1,12 @@
+services:
+  db:
+    image: postgres:latest
+    restart: no
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: freelancersdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+        - ./data/db:/var/lib/postgresql/data

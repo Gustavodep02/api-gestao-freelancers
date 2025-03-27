@@ -2,7 +2,7 @@ package api_gestao_freelancers.service;
 
 import api_gestao_freelancers.dto.UserDto;
 import api_gestao_freelancers.entity.User;
-import api_gestao_freelancers.exceptions.InvalidCPFCNPJException;
+import api_gestao_freelancers.enums.MainProfile;
 import api_gestao_freelancers.exceptions.ResourceNotFoundException;
 import api_gestao_freelancers.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -63,14 +63,15 @@ public class UserService {
 
     public User replaceUser(Long id, UserDto userDto) {
         log.info("PUT /user/{} - replacing user with the DTO received: {}", id, userDto);
-
-        var user = userRepository.findById(id);
-        if (user.isEmpty()) {
+        var optionalUser = userRepository.findById(id);
+        if (optionalUser.isEmpty()) {
             log.error("User not found on replaceUser()");
             throw new ResourceNotFoundException("User not found with id: " + id);
         }
+        User user = optionalUser.get();
         log.debug("User found on replaceUser(): {}", user);
-        return userRepository.save(user.get());
+        BeanUtils.copyProperties(userDto, user, "id");
+        return userRepository.save(user);
     }
 
     public User updateUser(Long id, UserDto userDto) {
@@ -95,6 +96,12 @@ public class UserService {
                     if (patchUser.getMainProfile() != null) {
                         user.setMainProfile(patchUser.getMainProfile());
                     }
+                    if(patchUser.isFreelancer()){
+                        user.setFreelancer(true);
+                    }
+                    if(patchUser.isClient()){
+                        user.setClient(true);
+                    }
                     User savedUser = userRepository.save(user);
                     log.debug("User updated with ID: {}", savedUser.getId());
                     return savedUser;
@@ -109,7 +116,7 @@ public class UserService {
         String digits = cpfCnpj.replaceAll("\\D", "");
         if (!(digits.length() == 11 || digits.length() == 14)) {
             log.error("Invalid CPF CNPJ");
-            throw new InvalidCPFCNPJException("Invalid CPF/CNPJ");
+            throw new IllegalArgumentException("Invalid CPF/CNPJ");
         }
     }
 }
